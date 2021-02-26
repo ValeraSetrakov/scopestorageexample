@@ -12,5 +12,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="dividerColor">@android:color/darker_gray</item>
+
+        <item name="materialButtonStyle">@style/Widget.AppTheme.Button</item>
+        <item name="textInputStyle">@style/Widget.AppTheme.TextInputLayout</item>
     </style>
 </resources>

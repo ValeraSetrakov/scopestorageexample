@@ -5,9 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.recyclerview.widget.RecyclerView
-import ru.mobius.scopestorage.post.PostAdapter
-import ru.mobius.scopestorage.post.PostsFragment
+import ru.mobius.scopestorage.post.list.PostsFragment
 
 class MainActivity : AppCompatActivity() {
 

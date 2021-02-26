@@ -1,4 +1,4 @@
-package ru.mobius.scopestorage.post
+package ru.mobius.scopestorage.post.list
 
 import android.view.LayoutInflater
 import android.view.View

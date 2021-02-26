@@ -1,4 +1,4 @@
-package ru.mobius.scopestorage.post
+package ru.mobius.scopestorage.post.list
 
 import android.net.Uri
 import android.os.Bundle
