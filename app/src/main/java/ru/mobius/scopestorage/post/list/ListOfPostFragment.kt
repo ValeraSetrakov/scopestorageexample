@@ -12,10 +12,13 @@ import ru.mobius.scopestorage.post.domain.Post
 
 class ListOfPostFragment: Fragment(R.layout.fragment_list_of_post) {
 
-    private val postAdapter = PostAdapter()
+    private val postAdapter = PostAdapter {
+        openPostListener?.onPostDetailOpen(it)
+    }
     private lateinit var postsListView: RecyclerView
     private lateinit var addPostButton: FloatingActionButton
     private var addPostListener: AddPostButtonListener? = null
+    private var openPostListener: OpenPostDetailsListener? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,6 +27,7 @@ class ListOfPostFragment: Fragment(R.layout.fragment_list_of_post) {
         postsListView.adapter = postAdapter
         this.postAdapter.setPosts(createTestPosts())
         addPostListener = requireActivity() as AddPostButtonListener
+        openPostListener = requireActivity() as OpenPostDetailsListener
         addPostButton.setOnClickListener(addPostListener)
     }
 
@@ -33,6 +37,10 @@ class ListOfPostFragment: Fragment(R.layout.fragment_list_of_post) {
     }
 
     interface AddPostButtonListener: View.OnClickListener
+
+    interface OpenPostDetailsListener {
+        fun onPostDetailOpen(post: Post)
+    }
 }
 
 private fun createTestPosts(): Collection<Post> {

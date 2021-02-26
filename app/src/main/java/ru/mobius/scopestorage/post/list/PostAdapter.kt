@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.mobius.scopestorage.R
 import ru.mobius.scopestorage.post.domain.Post
 
-class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class PostAdapter(
+    private val onPostClick: (post: Post) -> Unit
+): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     private val posts = mutableListOf<Post>()
 
@@ -52,7 +54,7 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
         }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val imageView = itemView.findViewById<ImageView>(R.id.post_image_view)
         private val titleView = itemView.findViewById<TextView>(R.id.post_title_view)
@@ -62,6 +64,7 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
             imageView.setImageURI(post.image)
             titleView.text = post.title
             descriptionView.text = post.description
+            itemView.setOnClickListener{ onPostClick(post) }
         }
     }
 }

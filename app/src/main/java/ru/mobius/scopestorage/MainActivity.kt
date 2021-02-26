@@ -6,9 +6,11 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.*
 import ru.mobius.scopestorage.post.add.AddPostFragment
+import ru.mobius.scopestorage.post.detail.DetailPostFragment
+import ru.mobius.scopestorage.post.domain.Post
 import ru.mobius.scopestorage.post.list.ListOfPostFragment
 
-class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListener {
+class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListener, ListOfPostFragment.OpenPostDetailsListener {
 
     private lateinit var fragmentContainer: FragmentContainerView
 
@@ -25,6 +27,10 @@ class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListen
         openAddPostFragment()
     }
 
+    override fun onPostDetailOpen(post: Post) {
+        openPostDetailScreen(post)
+    }
+
     private fun openPostsFragment() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
@@ -36,6 +42,15 @@ class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListen
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             this.replace<AddPostFragment>()
+            addToBackStack(null)
+        }
+    }
+
+    private fun openPostDetailScreen(post: Post) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            val arguments = DetailPostFragment.createArgs(post)
+            this.replace<DetailPostFragment>(args = arguments)
             addToBackStack(null)
         }
     }
