@@ -26,5 +26,10 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
         createPostButton = view.findViewById(R.id.add_post_button)
 
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
+        createPostButton.setOnClickListener { createPost() }
+    }
+
+    private fun createPost() {
+        //todo add create post logic
     }
 }
