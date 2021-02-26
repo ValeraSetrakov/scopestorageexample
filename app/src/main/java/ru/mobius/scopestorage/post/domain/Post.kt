@@ -1,4 +1,4 @@
-package ru.mobius.scopestorage.post.list
+package ru.mobius.scopestorage.post.domain
 
 import android.net.Uri
 

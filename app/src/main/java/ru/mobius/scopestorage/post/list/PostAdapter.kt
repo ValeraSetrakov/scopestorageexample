@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.mobius.scopestorage.R
+import ru.mobius.scopestorage.post.domain.Post
 
 class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 

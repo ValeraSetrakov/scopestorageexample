@@ -5,4 +5,5 @@
     <string name="enter_post_description">Введите описание</string>
     <string name="select_post_image">Выберите изображение</string>
     <string name="add_post">Добавить пост</string>
+    <string name="list_of_post">Список постов</string>
 </resources>

@@ -1,13 +1,14 @@
 package ru.mobius.scopestorage
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import ru.mobius.scopestorage.post.list.PostsFragment
+import android.view.View
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.*
+import ru.mobius.scopestorage.post.add.AddPostFragment
+import ru.mobius.scopestorage.post.list.ListOfPostFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListener {
 
     private lateinit var fragmentContainer: FragmentContainerView
 
@@ -20,9 +21,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onClick(v: View?) {
+        openAddPostFragment()
+    }
+
     private fun openPostsFragment() {
         supportFragmentManager.commit {
-            this.add<PostsFragment>(fragmentContainer.id)
+            setReorderingAllowed(true)
+            this.replace<ListOfPostFragment>()
         }
     }
+
+    private fun openAddPostFragment() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            this.replace<AddPostFragment>()
+            addToBackStack(null)
+        }
+    }
+
+    private inline fun <reified F : Fragment> FragmentTransaction.replace(
+        @IdRes containerViewId: Int = fragmentContainer.id,
+        tag: String? = null,
+        args: Bundle? = null
+    ): FragmentTransaction = replace(containerViewId, F::class.java, args, tag)
 }
