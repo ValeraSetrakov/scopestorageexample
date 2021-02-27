@@ -15,7 +15,7 @@ import ru.mobius.scopestorage.R
 import ru.mobius.scopestorage.post.domain.Post
 import ru.mobius.scopestorage.setImageUriOrGone
 
-class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
+class ChangePostFragment : Fragment(R.layout.fragment_change_post) {
 
     private lateinit var titleEditText: TextInputLayout
     private lateinit var descriptionEditText: TextInputLayout
@@ -36,8 +36,10 @@ class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
         selectImageView = view.findViewById(R.id.select_image_container)
         selectedImageView = view.findViewById(R.id.image_view)
         changePostButton = view.findViewById(R.id.change_post_button)
+
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         changePostButton.setOnClickListener { changePost(post) }
+        selectImageView.setOnClickListener { selectImage() }
 
         with(post) {
             titleEditText.editText?.setText(this.title)
@@ -48,14 +50,17 @@ class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
 
     private fun changePost(post: Post) {
         viewLifecycleOwner.lifecycleScope.launch {
-            //todo add change post logic
             asynchChangePost(post)
             onPostChangedListener?.onPostChanged(post)
         }
     }
 
     private suspend fun asynchChangePost(post: Post) {
+        //todo add change post logic
+    }
 
+    private fun selectImage() {
+        //todo add select image logic
     }
 
     interface OnPostChangedListener {

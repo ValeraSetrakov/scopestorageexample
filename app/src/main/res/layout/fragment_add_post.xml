@@ -19,7 +19,7 @@
             android:id="@+id/title_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="@dimen/screen_padding"
             android:hint="@string/enter_post_title">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -34,8 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_post_description"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp">
+            android:layout_marginHorizontal="@dimen/screen_padding"
+            android:layout_marginTop="@dimen/screen_padding">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -46,11 +46,17 @@
         <FrameLayout
             android:id="@+id/select_image_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/image_height"
             android:background="@drawable/select_image_background"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            android:padding="40dp">
+            android:layout_marginTop="@dimen/screen_padding"
+            android:layout_marginHorizontal="@dimen/screen_padding"
+            android:foreground="?selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,8 +94,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/add_post"
-            android:layout_marginBottom="16dp"
-            android:layout_marginHorizontal="16dp"/>
+            android:layout_marginBottom="@dimen/screen_padding"
+            android:layout_marginHorizontal="@dimen/screen_padding"/>
 
     </LinearLayout>
 

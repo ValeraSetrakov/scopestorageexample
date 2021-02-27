@@ -33,6 +33,7 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
 
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         addPostButton.setOnClickListener { addPost() }
+        selectImageView.setOnClickListener { selectImage() }
 
         onPostAddedListener = requireActivity() as? OnPostAddedListener
     }
@@ -52,6 +53,10 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
 
     private fun onPostAdded(post: Post) {
         onPostAddedListener?.onPostAdded(post)
+    }
+
+    private fun selectImage() {
+        //todo add select image logic
     }
 
     interface OnPostAddedListener {
