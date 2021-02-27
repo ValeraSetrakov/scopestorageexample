@@ -6,7 +6,9 @@ import android.widget.Button
 import android.widget.FrameLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 import ru.mobius.scopestorage.R
 
 class AddPostFragment: Fragment(R.layout.fragment_add_post) {
@@ -30,6 +32,8 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
     }
 
     private fun createPost() {
-        //todo add create post logic
+        viewLifecycleOwner.lifecycleScope.launch {
+            //todo add create post logic
+        }
     }
 }

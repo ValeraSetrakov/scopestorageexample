@@ -8,7 +8,9 @@ import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 import ru.mobius.scopestorage.R
 import ru.mobius.scopestorage.post.domain.Post
 
@@ -42,7 +44,9 @@ class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
     }
 
     private fun changePost(post: Post) {
-        //todo add change post logic
+        viewLifecycleOwner.lifecycleScope.launch {
+            //todo add change post logic
+        }
     }
 
     companion object {

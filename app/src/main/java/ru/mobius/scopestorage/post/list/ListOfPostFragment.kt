@@ -4,9 +4,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.launch
 import ru.mobius.scopestorage.R
 import ru.mobius.scopestorage.post.domain.Post
 
@@ -25,20 +27,25 @@ class ListOfPostFragment: Fragment(R.layout.fragment_list_of_post) {
         addPostButton = view.findViewById(R.id.add_post_button)
         postsListView = view.findViewById(R.id.posts_view)
         postsListView.adapter = postAdapter
-        this.postAdapter.setPosts(createTestPosts())
         addPostListener = requireActivity() as AddPostButtonListener
         openPostListener = requireActivity() as OpenPostDetailsListener
         addPostButton.setOnClickListener(addPostListener)
         ItemTouchHelper(DeleteSwipeCallback()).attachToRecyclerView(postsListView)
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        addPostListener = null
+        loadPosts()
     }
 
     private fun onRemovedPost(post: Post) {
-        //todo add removing post logic
+        viewLifecycleOwner.lifecycleScope.launch {
+            //todo add removing post logic
+        }
+    }
+
+    private fun loadPosts() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            //todo add posts loading logic
+            postAdapter.setPosts(createTestPosts())
+        }
     }
 
     interface AddPostButtonListener: View.OnClickListener
