@@ -10,6 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import ru.mobius.scopestorage.R
+import ru.mobius.scopestorage.post.domain.InternalPost
+import ru.mobius.scopestorage.post.domain.Post
+import ru.mobius.scopestorage.post.domain.createTestPost
 
 class AddPostFragment: Fragment(R.layout.fragment_add_post) {
 
@@ -18,6 +21,8 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
     private lateinit var selectImageView: FrameLayout
     private lateinit var createPostButton: Button
     private lateinit var toolbar: Toolbar
+
+    private var onPostCreatedListener: OnPostCreatedListener? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,11 +34,28 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
 
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         createPostButton.setOnClickListener { createPost() }
+
+        onPostCreatedListener = requireActivity() as? OnPostCreatedListener
     }
 
     private fun createPost() {
         viewLifecycleOwner.lifecycleScope.launch {
-            //todo add create post logic
+            val createdPost = asynchCreatePost()
+            onPostCreated(createdPost)
         }
+    }
+
+    private suspend fun asynchCreatePost(): Post {
+        //todo add create post logic
+        return createTestPost(0)
+    }
+
+
+    private fun onPostCreated(post: Post) {
+        onPostCreatedListener?.onPostCreated(post)
+    }
+
+    interface OnPostCreatedListener {
+        fun onPostCreated(post: Post)
     }
 }

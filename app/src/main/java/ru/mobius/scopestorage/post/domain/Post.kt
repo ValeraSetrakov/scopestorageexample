@@ -2,6 +2,7 @@ package ru.mobius.scopestorage.post.domain
 
 import android.net.Uri
 import java.io.Serializable
+import java.util.*
 
 sealed class Post : Serializable {
     abstract val id: String
@@ -26,3 +27,14 @@ data class ExternalPost(
     override val title: String,
     override val description: String
 ) : Post()
+
+fun createTestPost(
+    index: Int
+): Post {
+    return InternalPost(
+        id = UUID.randomUUID().toString(),
+        media = Image(uri = Uri.EMPTY),
+        title = "Заголовок $index",
+        description = "Описание $index"
+    )
+}

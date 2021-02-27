@@ -23,6 +23,8 @@ class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
     private lateinit var changePostButton: Button
     private lateinit var toolbar: Toolbar
 
+    private var onPostChangedListener: OnPostChangedListener? = null
+
     private val post: Post by lazy { arguments?.getSerializable(POST_KEY) as Post }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +48,17 @@ class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
     private fun changePost(post: Post) {
         viewLifecycleOwner.lifecycleScope.launch {
             //todo add change post logic
+            asynchChangePost(post)
+            onPostChangedListener?.onPostChanged(post)
         }
+    }
+
+    private suspend fun asynchChangePost(post: Post) {
+
+    }
+
+    interface OnPostChangedListener {
+        fun onPostChanged(post: Post)
     }
 
     companion object {

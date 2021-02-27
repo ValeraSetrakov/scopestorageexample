@@ -11,7 +11,8 @@ import ru.mobius.scopestorage.post.detail.DetailPostFragment
 import ru.mobius.scopestorage.post.domain.Post
 import ru.mobius.scopestorage.post.list.ListOfPostFragment
 
-class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListener, ListOfPostFragment.OpenPostDetailsListener, DetailPostFragment.ChangePostButtonListener {
+class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListener,
+    ListOfPostFragment.OpenPostDetailsListener, DetailPostFragment.ChangePostButtonListener, AddPostFragment.OnPostCreatedListener {
 
     private lateinit var fragmentContainer: FragmentContainerView
 
@@ -34,6 +35,10 @@ class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListen
 
     override fun onChangePostOpen(post: Post) {
         openChangePostScreen(post)
+    }
+
+    override fun onPostCreated(post: Post) {
+
     }
 
     private fun openPostsFragment() {
