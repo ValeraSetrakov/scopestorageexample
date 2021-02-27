@@ -6,11 +6,12 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.*
 import ru.mobius.scopestorage.post.add.AddPostFragment
+import ru.mobius.scopestorage.post.change.ChangePostFragment
 import ru.mobius.scopestorage.post.detail.DetailPostFragment
 import ru.mobius.scopestorage.post.domain.Post
 import ru.mobius.scopestorage.post.list.ListOfPostFragment
 
-class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListener, ListOfPostFragment.OpenPostDetailsListener {
+class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListener, ListOfPostFragment.OpenPostDetailsListener, DetailPostFragment.ChangePostButtonListener {
 
     private lateinit var fragmentContainer: FragmentContainerView
 
@@ -24,11 +25,15 @@ class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListen
     }
 
     override fun onClick(v: View?) {
-        openAddPostFragment()
+        openAddPostScreen()
     }
 
     override fun onPostDetailOpen(post: Post) {
         openPostDetailScreen(post)
+    }
+
+    override fun onChangePostOpen(post: Post) {
+        openChangePostScreen(post)
     }
 
     private fun openPostsFragment() {
@@ -38,7 +43,7 @@ class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListen
         }
     }
 
-    private fun openAddPostFragment() {
+    private fun openAddPostScreen() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             this.replace<AddPostFragment>()
@@ -51,6 +56,15 @@ class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListen
             setReorderingAllowed(true)
             val arguments = DetailPostFragment.createArgs(post)
             this.replace<DetailPostFragment>(args = arguments)
+            addToBackStack(null)
+        }
+    }
+
+    private fun openChangePostScreen(post: Post) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            val arguments = ChangePostFragment.createArguments(post)
+            this.replace<ChangePostFragment>(args = arguments)
             addToBackStack(null)
         }
     }
