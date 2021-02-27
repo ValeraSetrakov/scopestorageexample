@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.RadioGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +21,7 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
     private lateinit var selectImageView: FrameLayout
     private lateinit var addPostButton: Button
     private lateinit var toolbar: Toolbar
+    private lateinit var typeDestinationSelectorView: RadioGroup
 
     private var onPostAddedListener: OnPostAddedListener? = null
 
