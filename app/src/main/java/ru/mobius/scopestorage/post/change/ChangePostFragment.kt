@@ -39,7 +39,7 @@ class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
         with(post) {
             titleEditText.editText?.setText(this.title)
             descriptionEditText.editText?.setText(this.description)
-            selectedImageView.setImageURI(this.image)
+            selectedImageView.setImageURI(this.uri)
         }
     }
 

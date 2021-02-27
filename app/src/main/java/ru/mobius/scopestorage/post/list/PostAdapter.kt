@@ -62,7 +62,7 @@ class PostAdapter(
         private val descriptionView = itemView.findViewById<TextView>(R.id.post_description_view)
 
         fun bind(post: Post) {
-            imageView.setImageURI(post.image)
+            imageView.setImageURI(post.uri)
             titleView.text = post.title
             descriptionView.text = post.description
             itemView.setOnClickListener{ onPostClick(post) }

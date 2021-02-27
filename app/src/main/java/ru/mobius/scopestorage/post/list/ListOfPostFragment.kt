@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 import ru.mobius.scopestorage.R
+import ru.mobius.scopestorage.post.domain.Image
+import ru.mobius.scopestorage.post.domain.InternalPost
 import ru.mobius.scopestorage.post.domain.Post
+import java.util.*
 
 class ListOfPostFragment: Fragment(R.layout.fragment_list_of_post) {
 
@@ -77,8 +80,9 @@ class ListOfPostFragment: Fragment(R.layout.fragment_list_of_post) {
 private fun createTestPosts(): Collection<Post> {
     val posts = mutableListOf<Post>()
     repeat(times = 3) {
-        val post = Post(
-            image = Uri.EMPTY,
+        val post = InternalPost(
+            id = UUID.randomUUID().toString(),
+            media = Image(Uri.EMPTY),
             title = "Заголовок $it",
             description = "Описание к посту под номером $it"
         )

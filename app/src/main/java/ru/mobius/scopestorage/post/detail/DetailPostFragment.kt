@@ -39,7 +39,7 @@ class DetailPostFragment: Fragment(R.layout.fragment_detail_post) {
         with(post) {
             toolbar.title = title
             descriptionView.text = description
-            imageView.setImageURI(image)
+            imageView.setImageURI(uri)
         }
     }
 
