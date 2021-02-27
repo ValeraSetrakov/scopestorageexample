@@ -32,6 +32,7 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
         descriptionEditText = view.findViewById(R.id.description_edit_text)
         selectImageView = view.findViewById(R.id.select_image_container)
         addPostButton = view.findViewById(R.id.add_post_button)
+        typeDestinationSelectorView = view.findViewById(R.id.type_destination_rg)
 
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         addPostButton.setOnClickListener { addPost() }
@@ -48,10 +49,28 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
     }
 
     private suspend fun asynchAddPost(): Post {
-        //todo add create post logic
+        return when(typeDestinationSelectorView.checkedRadioButtonId) {
+            R.id.internal_rb -> {
+                asycnhAddInternalPost()
+            }
+            R.id.external_rb -> {
+                asynchAddExternalPost()
+            }
+            else -> {
+                error("Wrong type of destination")
+            }
+        }
+    }
+
+    private suspend fun asycnhAddInternalPost(): Post {
+        //todo add create internal post logic
         return createTestPost(0)
     }
 
+    private suspend fun asynchAddExternalPost(): Post {
+        //todo add create external post logic
+        return createTestPost(0)
+    }
 
     private fun onPostAdded(post: Post) {
         onPostAddedListener?.onPostAdded(post)
