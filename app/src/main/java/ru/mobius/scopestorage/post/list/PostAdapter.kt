@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.mobius.scopestorage.R
 import ru.mobius.scopestorage.post.domain.Post
+import ru.mobius.scopestorage.setImageUriOrGone
 
 class PostAdapter(
     private val onPostClick: (post: Post) -> Unit
@@ -62,7 +63,7 @@ class PostAdapter(
         private val descriptionView = itemView.findViewById<TextView>(R.id.post_description_view)
 
         fun bind(post: Post) {
-            imageView.setImageURI(post.uri)
+            imageView.setImageUriOrGone(post.uri)
             titleView.text = post.title
             descriptionView.text = post.description
             itemView.setOnClickListener{ onPostClick(post) }

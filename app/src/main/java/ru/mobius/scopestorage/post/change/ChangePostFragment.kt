@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import ru.mobius.scopestorage.R
 import ru.mobius.scopestorage.post.domain.Post
+import ru.mobius.scopestorage.setImageUriOrGone
 
 class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
 
@@ -41,7 +42,7 @@ class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
         with(post) {
             titleEditText.editText?.setText(this.title)
             descriptionEditText.editText?.setText(this.description)
-            selectedImageView.setImageURI(this.uri)
+            selectedImageView.setImageUriOrGone(this.uri)
         }
     }
 

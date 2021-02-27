@@ -4,6 +4,9 @@ import android.net.Uri
 
 sealed class Media {
     abstract val uri: Uri
+
+    val isEmpty: Boolean
+        get() = uri == Uri.EMPTY
 }
 
 data class Image(

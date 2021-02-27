@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import ru.mobius.scopestorage.R
 import ru.mobius.scopestorage.post.domain.Post
+import ru.mobius.scopestorage.setImageUriOrGone
 
 class DetailPostFragment: Fragment(R.layout.fragment_detail_post) {
 
@@ -39,7 +40,7 @@ class DetailPostFragment: Fragment(R.layout.fragment_detail_post) {
         with(post) {
             toolbar.title = title
             descriptionView.text = description
-            imageView.setImageURI(uri)
+            imageView.setImageUriOrGone(uri)
         }
     }
 
