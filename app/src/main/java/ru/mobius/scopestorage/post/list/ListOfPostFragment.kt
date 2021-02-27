@@ -3,8 +3,8 @@ package ru.mobius.scopestorage.post.list
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.mobius.scopestorage.R
@@ -29,6 +29,7 @@ class ListOfPostFragment: Fragment(R.layout.fragment_list_of_post) {
         addPostListener = requireActivity() as AddPostButtonListener
         openPostListener = requireActivity() as OpenPostDetailsListener
         addPostButton.setOnClickListener(addPostListener)
+        ItemTouchHelper(DeleteSwipeCallback()).attachToRecyclerView(postsListView)
     }
 
     override fun onDestroyView() {
@@ -36,10 +37,33 @@ class ListOfPostFragment: Fragment(R.layout.fragment_list_of_post) {
         addPostListener = null
     }
 
+    private fun onRemovedPost(post: Post) {
+        //todo add removing post logic
+    }
+
     interface AddPostButtonListener: View.OnClickListener
 
     interface OpenPostDetailsListener {
         fun onPostDetailOpen(post: Post)
+    }
+
+    private inner class DeleteSwipeCallback: ItemTouchHelper.SimpleCallback(
+        0,
+        ItemTouchHelper.LEFT
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val adapterPosition = viewHolder.adapterPosition
+            val removedPost = postAdapter.removePost(adapterPosition)
+            onRemovedPost(removedPost)
+        }
     }
 }
 

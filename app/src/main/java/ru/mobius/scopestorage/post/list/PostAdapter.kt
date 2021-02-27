@@ -44,14 +44,15 @@ class PostAdapter(
         }
     }
 
-    fun removePost(post: Post) {
+    fun removePost(post: Post): Post {
         val indexOfRemovedPost = this.posts.indexOf(post)
-        if (indexOfRemovedPost != -1) {
-            val resultOfRemoving = this.posts.remove(post)
-            if (resultOfRemoving) {
-                notifyItemRemoved(indexOfRemovedPost)
-            }
-        }
+        return removePost(indexOfRemovedPost)
+    }
+
+    fun removePost(index: Int): Post {
+        val removedPost = this.posts.removeAt(index)
+        notifyItemRemoved(index)
+        return removedPost
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
