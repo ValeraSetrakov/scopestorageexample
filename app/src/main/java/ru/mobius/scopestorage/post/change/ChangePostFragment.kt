@@ -42,7 +42,7 @@ class ChangePostFragment: Fragment(R.layout.fragment_change_post) {
     }
 
     private fun changePost(post: Post) {
-        //todo add create post logic
+        //todo add change post logic
     }
 
     companion object {
