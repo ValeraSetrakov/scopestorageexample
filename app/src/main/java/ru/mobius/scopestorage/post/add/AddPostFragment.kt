@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import ru.mobius.scopestorage.R
-import ru.mobius.scopestorage.post.domain.InternalPost
 import ru.mobius.scopestorage.post.domain.Post
 import ru.mobius.scopestorage.post.domain.createTestPost
 
@@ -19,10 +18,10 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
     private lateinit var titleEditText: TextInputLayout
     private lateinit var descriptionEditText: TextInputLayout
     private lateinit var selectImageView: FrameLayout
-    private lateinit var createPostButton: Button
+    private lateinit var addPostButton: Button
     private lateinit var toolbar: Toolbar
 
-    private var onPostCreatedListener: OnPostCreatedListener? = null
+    private var onPostAddedListener: OnPostAddedListener? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,32 +29,32 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
         titleEditText = view.findViewById(R.id.title_edit_text)
         descriptionEditText = view.findViewById(R.id.description_edit_text)
         selectImageView = view.findViewById(R.id.select_image_container)
-        createPostButton = view.findViewById(R.id.add_post_button)
+        addPostButton = view.findViewById(R.id.add_post_button)
 
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
-        createPostButton.setOnClickListener { createPost() }
+        addPostButton.setOnClickListener { addPost() }
 
-        onPostCreatedListener = requireActivity() as? OnPostCreatedListener
+        onPostAddedListener = requireActivity() as? OnPostAddedListener
     }
 
-    private fun createPost() {
+    private fun addPost() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val createdPost = asynchCreatePost()
-            onPostCreated(createdPost)
+            val createdPost = asynchAddPost()
+            onPostAdded(createdPost)
         }
     }
 
-    private suspend fun asynchCreatePost(): Post {
+    private suspend fun asynchAddPost(): Post {
         //todo add create post logic
         return createTestPost(0)
     }
 
 
-    private fun onPostCreated(post: Post) {
-        onPostCreatedListener?.onPostCreated(post)
+    private fun onPostAdded(post: Post) {
+        onPostAddedListener?.onPostAdded(post)
     }
 
-    interface OnPostCreatedListener {
-        fun onPostCreated(post: Post)
+    interface OnPostAddedListener {
+        fun onPostAdded(post: Post)
     }
 }

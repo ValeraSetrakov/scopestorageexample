@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import ru.mobius.scopestorage.post.add.AddPostFragment
 import ru.mobius.scopestorage.post.change.ChangePostFragment
 import ru.mobius.scopestorage.post.detail.DetailPostFragment
@@ -12,7 +15,7 @@ import ru.mobius.scopestorage.post.domain.Post
 import ru.mobius.scopestorage.post.list.ListOfPostFragment
 
 class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListener,
-    ListOfPostFragment.OpenPostDetailsListener, DetailPostFragment.ChangePostButtonListener, AddPostFragment.OnPostCreatedListener {
+    ListOfPostFragment.OpenPostDetailsListener, DetailPostFragment.ChangePostButtonListener, AddPostFragment.OnPostAddedListener {
 
     private lateinit var fragmentContainer: FragmentContainerView
 
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity(), ListOfPostFragment.AddPostButtonListen
         openChangePostScreen(post)
     }
 
-    override fun onPostCreated(post: Post) {
+    override fun onPostAdded(post: Post) {
 
     }
 
