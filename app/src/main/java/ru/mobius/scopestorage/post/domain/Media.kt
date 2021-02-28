@@ -12,3 +12,7 @@ sealed class Media {
 data class Image(
     override val uri: Uri
 ) : Media()
+
+object NonMedia: Media() {
+    override val uri: Uri = Uri.EMPTY
+}

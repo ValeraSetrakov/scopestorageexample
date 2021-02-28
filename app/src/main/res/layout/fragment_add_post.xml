@@ -7,7 +7,8 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -50,6 +51,7 @@
             android:background="@drawable/select_image_background"
             android:layout_marginTop="@dimen/screen_padding"
             android:layout_marginHorizontal="@dimen/screen_padding"
+            android:visibility="gone"
             android:foreground="?selectableItemBackground">
 
             <ImageView
@@ -66,7 +68,27 @@
         </FrameLayout>
 
         <RadioGroup
-            android:id="@+id/type_destination_rg"
+            android:id="@+id/storage_type_destination_rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/app_specific_storage_type_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/app_specific_storage"/>
+            <RadioButton
+                android:id="@+id/shared_storage_type_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/shared_storage"/>
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/app_specific_type_destination_rg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

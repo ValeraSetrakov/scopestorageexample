@@ -4,34 +4,20 @@ import android.net.Uri
 import java.io.Serializable
 import java.util.*
 
-sealed class Post : Serializable {
-    abstract val id: String
-    abstract val media: Media
-    abstract val title: String
-    abstract val description: String
-
+data class Post(
+    val id: String = UUID.randomUUID().toString(),
+    val media: Media = NonMedia,
+    val title: String,
+    val description: String
+) : Serializable {
     val uri: Uri
         get() = media.uri
 }
 
-data class InternalPost(
-    override val id: String,
-    override val media: Media,
-    override val title: String,
-    override val description: String
-) : Post()
-
-data class ExternalPost(
-    override val id: String,
-    override val media: Media,
-    override val title: String,
-    override val description: String
-) : Post()
-
 fun createTestPost(
     index: Int
 ): Post {
-    return InternalPost(
+    return Post(
         id = UUID.randomUUID().toString(),
         media = Image(uri = Uri.EMPTY),
         title = "Заголовок $index",

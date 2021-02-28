@@ -4,26 +4,66 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.RadioGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.launch
 import ru.mobius.scopestorage.R
+import ru.mobius.scopestorage.post.domain.Media
+import ru.mobius.scopestorage.post.domain.NonMedia
 import ru.mobius.scopestorage.post.domain.Post
-import ru.mobius.scopestorage.post.domain.createTestPost
 
-class AddPostFragment: Fragment(R.layout.fragment_add_post) {
+class AddPostFragment : Fragment(R.layout.fragment_add_post) {
 
     private lateinit var titleEditText: TextInputLayout
     private lateinit var descriptionEditText: TextInputLayout
     private lateinit var selectImageView: FrameLayout
+    private lateinit var selectedImageView: ImageView
     private lateinit var addPostButton: Button
     private lateinit var toolbar: Toolbar
-    private lateinit var typeDestinationSelectorView: RadioGroup
+    private lateinit var storageTypeDestinationSelectorView: RadioGroup
+    private lateinit var appSpecificStorageTypeDestinationSelectorView: RadioGroup
 
     private var onPostAddedListener: OnPostAddedListener? = null
+
+    private val isAppSpecificStorageTypeSelect: Boolean
+        get() {
+            return storageTypeDestinationSelectorView.checkedRadioButtonId == R.id.app_specific_storage_type_rb
+        }
+
+    private val isSharedStorageTypeSelect: Boolean
+        get() {
+            return storageTypeDestinationSelectorView.checkedRadioButtonId == R.id.shared_storage_type_rb
+        }
+
+    private val isInternalStorageTypeSelect: Boolean
+        get() {
+            return isAppSpecificStorageTypeSelect &&
+                    appSpecificStorageTypeDestinationSelectorView.checkedRadioButtonId == R.id.internal_rb
+        }
+
+    private val isExternalStorageTypeSelect: Boolean
+        get() {
+            return isAppSpecificStorageTypeSelect &&
+                    appSpecificStorageTypeDestinationSelectorView.checkedRadioButtonId == R.id.external_rb
+        }
+
+    private var media: Media = NonMedia
+        get() {
+            return if (isSharedStorageTypeSelect) {
+                field
+            } else {
+                NonMedia
+            }
+        }
+
+    private val title: String
+        get() = titleEditText.editText?.text.toString()
+
+    private val description: String
+        get() = descriptionEditText.editText?.text.toString()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,44 +72,61 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
         descriptionEditText = view.findViewById(R.id.description_edit_text)
         selectImageView = view.findViewById(R.id.select_image_container)
         addPostButton = view.findViewById(R.id.add_post_button)
-        typeDestinationSelectorView = view.findViewById(R.id.type_destination_rg)
+        storageTypeDestinationSelectorView = view.findViewById(R.id.storage_type_destination_rg)
+        appSpecificStorageTypeDestinationSelectorView =
+            view.findViewById(R.id.app_specific_type_destination_rg)
+        selectImageView = view.findViewById(R.id.image_view)
 
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         addPostButton.setOnClickListener { addPost() }
         selectImageView.setOnClickListener { selectImage() }
+        storageTypeDestinationSelectorView.setOnCheckedChangeListener { _, checkedId ->
+            appSpecificStorageTypeDestinationSelectorView.isVisible =
+                checkedId == R.id.app_specific_storage_type_rb
+            selectImageView.isVisible = checkedId == R.id.shared_storage_type_rb
+        }
 
         onPostAddedListener = requireActivity() as? OnPostAddedListener
     }
 
     private fun addPost() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val createdPost = asynchAddPost()
-            onPostAdded(createdPost)
+        val createdPost = createPost()
+        savePost(createdPost)
+        onPostAdded(createdPost)
+    }
+
+    private fun createPost(): Post {
+        return Post(
+            title = title,
+            description = description,
+            media = media
+        )
+    }
+
+    private fun savePost(post: Post) {
+        when {
+            isSharedStorageTypeSelect -> {
+                savePostToSharedStorage(post)
+            }
+            isExternalStorageTypeSelect -> {
+                savePostToExternalStorage(post)
+            }
+            isInternalStorageTypeSelect -> {
+                savePostToInternalStorage(post)
+            }
         }
     }
 
-    private suspend fun asynchAddPost(): Post {
-        return when(typeDestinationSelectorView.checkedRadioButtonId) {
-            R.id.internal_rb -> {
-                asycnhAddInternalPost()
-            }
-            R.id.external_rb -> {
-                asynchAddExternalPost()
-            }
-            else -> {
-                error("Wrong type of destination")
-            }
-        }
+    private fun savePostToSharedStorage(post: Post) {
+        // todo add saving to shared storage
     }
 
-    private suspend fun asycnhAddInternalPost(): Post {
-        //todo add create internal post logic
-        return createTestPost(0)
+    private fun savePostToInternalStorage(post: Post) {
+        // todo add saving to internal storage
     }
 
-    private suspend fun asynchAddExternalPost(): Post {
-        //todo add create external post logic
-        return createTestPost(0)
+    private fun savePostToExternalStorage(post: Post) {
+        // todo add saving to external storage
     }
 
     private fun onPostAdded(post: Post) {

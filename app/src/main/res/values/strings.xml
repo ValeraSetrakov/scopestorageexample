@@ -7,6 +7,8 @@
     <string name="add_post">Добавить пост</string>
     <string name="change_post">Изменить пост</string>
     <string name="list_of_post">Список постов</string>
+    <string name="app_specific_storage">App specific storage</string>
+    <string name="shared_storage">Shared storage</string>
     <string name="internal_storage">Внутреннее хранилище</string>
     <string name="external_storage">Внешнее хранилище</string>
 </resources>
