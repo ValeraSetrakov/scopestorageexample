@@ -76,7 +76,7 @@ class AddPostFragment : Fragment(R.layout.fragment_add_post) {
         storageTypeDestinationSelectorView = view.findViewById(R.id.storage_type_destination_rg)
         appSpecificStorageTypeDestinationSelectorView =
             view.findViewById(R.id.app_specific_type_destination_rg)
-        selectImageView = view.findViewById(R.id.image_view)
+        selectedImageView = view.findViewById(R.id.image_view)
 
         toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         addPostButton.setOnClickListener { addPost() }
