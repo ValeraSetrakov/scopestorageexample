@@ -1,6 +1,8 @@
 package ru.mobius.scopestorage.post.add
 
 import android.os.Bundle
+import android.os.Environment
+import android.os.Environment.MEDIA_MOUNTED
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
@@ -14,6 +16,7 @@ import ru.mobius.scopestorage.R
 import ru.mobius.scopestorage.post.domain.Media
 import ru.mobius.scopestorage.post.domain.NonMedia
 import ru.mobius.scopestorage.post.domain.Post
+import java.io.File
 
 class AddPostFragment : Fragment(R.layout.fragment_add_post) {
 
@@ -126,7 +129,23 @@ class AddPostFragment : Fragment(R.layout.fragment_add_post) {
     }
 
     private fun savePostToExternalStorage(post: Post) {
-        // todo add saving to external storage
+        if (Environment.getExternalStorageState() == MEDIA_MOUNTED) {
+            val externalDir = requireContext().getExternalFilesDir(null)
+            val postsDir = File(externalDir, EXTERNAL_POSTS_DIR)
+            if (!postsDir.exists() && !postsDir.mkdir()) {
+                error("Failed create $postsDir")
+            }
+            val postDir = File(postsDir, post.id)
+            if (!postDir.exists() && !postDir.mkdir()) {
+                error("Failed create $postDir")
+            }
+            val postFile = File(postDir, post.title)
+            if (!postFile.exists() && !postFile.createNewFile()) {
+                error("Failed create $postFile")
+            }
+            postFile.writeBytes(post.description.toByteArray())
+        }
+
     }
 
     private fun onPostAdded(post: Post) {
@@ -139,5 +158,9 @@ class AddPostFragment : Fragment(R.layout.fragment_add_post) {
 
     interface OnPostAddedListener {
         fun onPostAdded(post: Post)
+    }
+
+    companion object {
+        private const val EXTERNAL_POSTS_DIR = "posts"
     }
 }
