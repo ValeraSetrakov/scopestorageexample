@@ -14,6 +14,7 @@ import ru.mobius.scopestorage.R
 import ru.mobius.scopestorage.post.domain.Media
 import ru.mobius.scopestorage.post.domain.NonMedia
 import ru.mobius.scopestorage.post.domain.Post
+import java.io.File
 
 class AddPostFragment : Fragment(R.layout.fragment_add_post) {
 
@@ -122,7 +123,20 @@ class AddPostFragment : Fragment(R.layout.fragment_add_post) {
     }
 
     private fun savePostToInternalStorage(post: Post) {
-        // todo add saving to internal storage
+        val filesDir = requireContext().filesDir
+        val postsDir = File(filesDir, POSTS_DIR_NAME)
+        if (!postsDir.exists() && !postsDir.mkdir()) {
+            error("Failed creation dir for posts")
+        }
+        val postDir = File(postsDir, post.id)
+        if (!postDir.exists() && !postDir.mkdir()) {
+            error("Failed creation dir for post $post")
+        }
+        val postFile = File(postDir, post.title)
+        if (!postFile.exists() && !postFile.createNewFile()) {
+            error("Failed creation post file $post")
+        }
+        postFile.writeBytes(post.description.toByteArray())
     }
 
     private fun savePostToExternalStorage(post: Post) {
@@ -139,5 +153,9 @@ class AddPostFragment : Fragment(R.layout.fragment_add_post) {
 
     interface OnPostAddedListener {
         fun onPostAdded(post: Post)
+    }
+
+    companion object {
+        private const val POSTS_DIR_NAME = "posts"
     }
 }
